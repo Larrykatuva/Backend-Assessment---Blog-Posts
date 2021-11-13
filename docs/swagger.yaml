@@ -1,0 +1,116 @@
+openapi: 3.0.0
+info:
+  title: Backend Assessment - Blog Posts
+  summary: API endpoints for backend assessment - blog posts
+  description: Please select the server below depending on whether you are using Heroku or running the application locally
+
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000/api
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        author:
+          type: string
+          example: Zackery Turner
+        authorId:
+          type: number
+          example: 12
+        id:
+          type: number
+          example: 2
+        likes:
+          type: number
+          example: 469
+        popularity:
+          type: float
+          example: 0.68
+        reads:
+          type: number
+          example: 90406
+        tags:
+          type: array
+          items: 
+            tags: 
+              type: string
+              example: tech
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: sortBy parameter is invalid
+paths:
+  /ping:
+    get:
+      summary: request 1 (ping)
+      description: ping get request
+      tags:
+        - Post
+      responses:
+        200:
+          description: Ping request successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+  /posts:
+    get:
+      summary: Posts list endpoint
+      description: Quering a lists of all posts
+      tags:
+        - Post
+      parameters:
+        - in: query
+          name: tags
+          required: true
+          schema:
+            type: string
+          description: Specify your query tags
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+          description: Enter sortBy value
+        - in: query
+          name: direction
+          schema:
+            type: string
+          description: Default sort direction is asc
+      responses:
+        200:
+          description: if request is successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#components/schemas/Post'
+        400:
+          description: if tags are not specified
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Tags parameter is required
+        400:
+          description: if sortBy values is not specified
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#components/schemas/Error'
+              
+  

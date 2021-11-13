@@ -1,0 +1,18 @@
+.env
+node_modules
+dist
+
+# Coverage directory used by nyc
+coverage
+.coveralls.yml
+.nyc_output
+
+# Google credentials file
+src/config/google_spreadsheets_key.json
+
+# Generated csv files
+*.csv
+
+# Editor configuration files
+.idea/
+.vscode/
